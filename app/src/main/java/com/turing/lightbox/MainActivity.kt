@@ -1,4 +1,4 @@
-package com.turing.ligthbox
+package com.turing.lightbox
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,14 +10,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.turing.ligthbox.ui.theme.LigthBoxTheme
+import com.turing.lightbox.ui.theme.LightBoxTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      LigthBoxTheme {
+      LightBoxTheme {
         // A surface container using the 'background' color from the theme
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
           Greeting("Android")
@@ -35,7 +37,7 @@ fun Greeting(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-  LigthBoxTheme {
+  LightBoxTheme {
     Greeting("Android")
   }
 }

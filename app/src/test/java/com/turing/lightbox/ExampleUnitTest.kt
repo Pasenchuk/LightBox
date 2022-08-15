@@ -1,4 +1,4 @@
-package com.turing.ligthbox
+package com.turing.lightbox
 
 import org.junit.Test
 
