@@ -1,3 +1,5 @@
 <resources>
   <string name="app_name">LightBox</string>
+  <string name="loading">Loading…</string>
+  <string name="description">Promotion image</string>
 </resources>

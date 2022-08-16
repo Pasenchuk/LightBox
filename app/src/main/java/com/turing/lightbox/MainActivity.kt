@@ -3,6 +3,8 @@ package com.turing.lightbox
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,11 +18,15 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
+import com.turing.lightbox.mediapager.MediaPagerScreen
 import com.turing.lightbox.ui.theme.LightBoxTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+
+  val mainVM: MainVM by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -28,7 +34,8 @@ class MainActivity : ComponentActivity() {
       LightBoxTheme {
         // A surface container using the 'background' color from the theme
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-          Greeting("Android")
+          mainVM.init()
+          Greeting(mainVM)
         }
       }
     }
@@ -36,14 +43,29 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-  Text(text = "Hello $name!")
+fun Greeting(mainVM: MainVM) {
+  Box() {
+    MediaPagerScreen(mediaPageDelegate = mainVM)
+
+    Column {
+      FlowRow(
+        mainAxisAlignment = FlowMainAxisAlignment.Center,
+      ) {
+        Text(text = "aaa", Modifier.padding(15.dp))
+        Text(text = "bbbbbbb", Modifier.padding(15.dp))
+        Text(text = "cccccccccccc", Modifier.padding(15.dp))
+        Text(text = "eee", Modifier.padding(15.dp))
+        Text(text = "eeeffffffffff", Modifier.padding(15.dp))
+        Text(text = "DDDDDDDDDDDDDDDDDDDDDDDDDD", Modifier.padding(15.dp))
+      }
+    }
+  }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
   LightBoxTheme {
-    Greeting("Android")
+//    Greeting("Android")
   }
 }
