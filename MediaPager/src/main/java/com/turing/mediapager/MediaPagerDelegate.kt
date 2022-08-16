@@ -2,7 +2,7 @@ package com.turing.mediapager
 
 import com.turing.lightbox.repo.MediaPagesRepo
 import com.turing.mediapager.domain.MediaPage
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.turing.mediapager.domain.MediaPagerMoveAction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +25,6 @@ interface MediaPageDelegate {
   suspend fun moveBackward()
 }
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class MediaPagerDelegateImpl @Inject constructor(private val mediaPagesRepo: MediaPagesRepo) : MediaPageDelegate {
 
   override val pageCountFlow: MutableStateFlow<Int> = MutableStateFlow(0)
@@ -101,7 +100,6 @@ class MediaPagerDelegateImpl @Inject constructor(private val mediaPagesRepo: Med
 
   companion object {
 
-    private const val PAGE_DISPlAY_TIMEOUT = 15_00L
     private const val INFINITE_PAGER_COUNT = Int.MAX_VALUE - 1
     private const val CENTER_POSITION = INFINITE_PAGER_COUNT / 2
   }

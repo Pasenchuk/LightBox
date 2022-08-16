@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 rootProject.name = "LightBox"
 include ':app'
 include ':MediaPager'
+include ':ControlPanel'
+include ':core'

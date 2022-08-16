@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="call_us">Call Us</string>
+  <string name="price_list">Price List</string>
+  <string name="subscribtions">Subscribtions</string>
+  <string name="login">Login</string>
+  <string name="preferences">Preferences</string>
+</resources>

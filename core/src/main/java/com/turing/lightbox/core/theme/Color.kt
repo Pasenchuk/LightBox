@@ -1,4 +1,4 @@
-package com.turing.lightbox.ui.theme
+package com.turing.lightbox.core.theme
 
 import androidx.compose.ui.graphics.Color
 

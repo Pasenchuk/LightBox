@@ -1,5 +1,6 @@
 package com.turing.mediapager.ui
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -18,57 +19,66 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import com.turing.lightbox.core.theme.LightBoxTheme
+import com.turing.lightbox.repo.LocalMediaPagesRepo
 import com.turing.mediapager.MediaPageDelegate
+import com.turing.mediapager.MediaPagerDelegateImpl
 import com.turing.mediapager.R
 import com.turing.mediapager.domain.PhotoPage
 import com.turing.mediapager.domain.VideoPage
 import com.turing.mediapager.video.VideoPlayer
 import kotlinx.coroutines.launch
+import kotlin.reflect.KSuspendFunction0
 
 @Composable
 fun MediaPagerScreen(mediaPageDelegate: MediaPageDelegate) {
-
-  val coroutineScope = rememberCoroutineScope()
 
   val count by mediaPageDelegate.pageCountFlow.collectAsState()
   Box {
     if (count > 0) {
       MediaPager(mediaPageDelegate, count)
 
-      Image(
-        painterResource(R.drawable.chevron_left),
-        contentDescription = "",
-        contentScale = ContentScale.Inside,
-        modifier = Modifier
-          .align(Alignment.CenterStart)
-          .size(60.dp)
-          .clickable {
-            coroutineScope.launch {
-              mediaPageDelegate.moveBackward()
-            }
-          }
+      SideArrowButton(
+        Modifier.align(Alignment.CenterStart),
+        R.drawable.chevron_left,
+        mediaPageDelegate::moveBackward
       )
-      Image(
-        painterResource(R.drawable.chevron_right),
-        contentDescription = "",
-        contentScale = ContentScale.Inside,
-        modifier = Modifier
-          .align(Alignment.CenterEnd)
-          .size(60.dp)
-          .clickable {
-            coroutineScope.launch {
-              mediaPageDelegate.moveForward()
-            }
-          }
+      SideArrowButton(
+        Modifier.align(Alignment.CenterEnd),
+        R.drawable.chevron_right,
+        mediaPageDelegate::moveForward
       )
     } else PagerLoading()
   }
+}
+
+@Composable
+private fun SideArrowButton(
+  modifier: Modifier,
+  @DrawableRes icon: Int,
+  clickCallback: KSuspendFunction0<Unit>
+) {
+
+  val coroutineScope = rememberCoroutineScope()
+  Image(
+    painterResource(icon),
+    contentDescription = "",
+    contentScale = ContentScale.Inside,
+    modifier = modifier
+      .size(60.dp)
+      .clickable {
+        coroutineScope.launch {
+          clickCallback()
+        }
+      }
+  )
 }
 
 @OptIn(ExperimentalPagerApi::class)
@@ -129,3 +139,13 @@ private fun PagerLoading() {
     modifier = Modifier.fillMaxWidth()
   )
 }
+
+@Preview(showBackground = true)
+@Composable
+fun LoadingPreview() {
+  LightBoxTheme {
+    val context = LocalContext.current
+    MediaPagerScreen(mediaPageDelegate = MediaPagerDelegateImpl(LocalMediaPagesRepo(context)))
+  }
+}
+
