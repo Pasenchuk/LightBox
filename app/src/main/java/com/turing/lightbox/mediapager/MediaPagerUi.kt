@@ -2,23 +2,25 @@
 
 package com.turing.lightbox.mediapager
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.media3.common.C
-import androidx.media3.common.Player
-import androidx.media3.exoplayer.ExoPlayer
+import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -32,10 +34,40 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MediaPagerScreen(mediaPageDelegate: MediaPageDelegate) {
+
+  val coroutineScope = rememberCoroutineScope()
+
   val count by mediaPageDelegate.pageCountFlow.collectAsState()
   Box {
     if (count > 0) {
       MediaPager(mediaPageDelegate, count)
+
+      Image(
+        painterResource(R.drawable.chevron_left),
+        contentDescription = "",
+        contentScale = ContentScale.Inside,
+        modifier = Modifier
+          .align(Alignment.CenterStart)
+          .size(60.dp)
+          .clickable {
+            coroutineScope.launch {
+              mediaPageDelegate.moveBackward()
+            }
+          }
+      )
+      Image(
+        painterResource(R.drawable.chevron_right),
+        contentDescription = "",
+        contentScale = ContentScale.Inside,
+        modifier = Modifier
+          .align(Alignment.CenterEnd)
+          .size(60.dp)
+          .clickable {
+            coroutineScope.launch {
+              mediaPageDelegate.moveForward()
+            }
+          }
+      )
     } else PagerLoading()
   }
 }
@@ -43,7 +75,6 @@ fun MediaPagerScreen(mediaPageDelegate: MediaPageDelegate) {
 @Composable
 private fun MediaPager(mediaPageDelegate: MediaPageDelegate, count: Int) {
 
-  val context = LocalContext.current
   val coroutineScope = rememberCoroutineScope()
 
   val pagerState = rememberPagerState()
@@ -55,44 +86,26 @@ private fun MediaPager(mediaPageDelegate: MediaPageDelegate, count: Int) {
     }
   }
 
-  val exoPlayer = remember {
-    ExoPlayer.Builder(context)
-      .build()
-      .apply {
-        videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING
-        repeatMode = Player.REPEAT_MODE_ONE
-        prepare()
-      }
-  }
-
   HorizontalPager(
     count = count,
     state = pagerState,
   ) { position ->
-    MediaPage(mediaPageDelegate, exoPlayer, position)
+    MediaPage(mediaPageDelegate, position)
   }
-
 
   coroutineScope.launch {
     mediaPageDelegate.pagerActionFlow.collect { action ->
-      when (action) {
-        DoNoting -> {} // nothing
-        is MoveToPage -> {
-          if (action.animated) pagerState.animateScrollToPage(action.position)
-          else pagerState.scrollToPage(action.position)
-        }
-      }
+      if (action.animated) pagerState.animateScrollToPage(action.position)
+      else pagerState.scrollToPage(action.position)
     }
   }
 }
 
-
 @Composable
-private fun MediaPage(mediaPageDelegate: MediaPageDelegate, exoPlayer: ExoPlayer, position: Int) {
-  val page = mediaPageDelegate.getPage(position)
-  when (page) {
+private fun MediaPage(mediaPageDelegate: MediaPageDelegate, position: Int) {
+  when (val page = mediaPageDelegate.getPage(position)) {
     is PhotoPage -> PhotoPageUI(page)
-    is VideoPage -> VideoPageUI(page, position, mediaPageDelegate, exoPlayer)
+    is VideoPage -> VideoPlayer(uri = page.uri)
     null -> PagerLoading()
   }
 }
@@ -107,16 +120,6 @@ fun PhotoPageUI(page: PhotoPage) {
     contentDescription = stringResource(R.string.description),
     contentScale = ContentScale.Crop,
   )
-}
-
-@Composable
-fun VideoPageUI(page: VideoPage, position: Int, mediaPageDelegate: MediaPageDelegate, exoPlayer: ExoPlayer) {
-  val coroutineScope = rememberCoroutineScope()
-  VideoPlayer(uri = page.uri, exoPlayer = exoPlayer) {
-    coroutineScope.launch {
-      mediaPageDelegate.onVideoEnded(position)
-    }
-  }
 }
 
 @Composable
