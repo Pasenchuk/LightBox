@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight.Companion.ExtraLight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.turing.controlpanel.R
@@ -46,7 +47,10 @@ fun LightBoxButton(buttonModel: ButtonModel) {
       modifier = Modifier.size(ButtonDefaults.IconSize)
     )
     Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-    Text(stringResource(buttonModel.caption))
+    Column {
+      Text(stringResource(buttonModel.caption))
+      Text(buttonModel.subtext, fontWeight = ExtraLight)
+    }
   }
 }
 
@@ -55,11 +59,11 @@ fun LightBoxButton(buttonModel: ButtonModel) {
 fun DefaultPreview() {
   LightBoxTheme {
     Column(Modifier.fillMaxWidth()) {
-      LightBoxButton(ButtonModel(Icons.Filled.AccountBox, R.string.login, 0.5f))
-      LightBoxButton(ButtonModel(Icons.Filled.List, R.string.price_list, 0.75f))
-      LightBoxButton(ButtonModel(Icons.Filled.Add, R.string.subscribtions, 0.75f))
-      LightBoxButton(ButtonModel(Icons.Filled.Phone, R.string.call_us, 0.4f))
-      LightBoxButton(ButtonModel(Icons.Filled.Build, R.string.preferences, 0.4f))
+      LightBoxButton(ButtonModel(Icons.Filled.AccountBox, R.string.login, 0.5f, "Awesome"))
+      LightBoxButton(ButtonModel(Icons.Filled.List, R.string.price_list, 0.75f, "Awesome"))
+      LightBoxButton(ButtonModel(Icons.Filled.Add, R.string.subscribtions, 0.75f, "Awesome"))
+      LightBoxButton(ButtonModel(Icons.Filled.Phone, R.string.call_us, 0.4f, "Awesome"))
+      LightBoxButton(ButtonModel(Icons.Filled.Build, R.string.preferences, 0.4f, "Awesome"))
     }
   }
 }

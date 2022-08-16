@@ -7,5 +7,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 class ButtonModel(
   val icon: ImageVector,
   @StringRes val caption: Int,
-  val screenPercentage: Float
+  val screenPercentage: Float,
+  val subtext: String = "",
 )

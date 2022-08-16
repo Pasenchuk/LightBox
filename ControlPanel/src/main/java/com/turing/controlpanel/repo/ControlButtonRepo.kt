@@ -18,11 +18,11 @@ interface ControlButtonRepo {
 class ControlButtonRepoImpl @Inject constructor() : ControlButtonRepo {
 
   override suspend fun loadButtons(): List<ButtonModel> = listOf(
-    ButtonModel(Icons.Filled.AccountBox, R.string.login, 0.5f),
-    ButtonModel(Icons.Filled.List, R.string.price_list, 0.75f),
-    ButtonModel(Icons.Filled.Add, R.string.subscribtions, 0.75f),
-    ButtonModel(Icons.Filled.Phone, R.string.call_us, 0.4f),
-    ButtonModel(Icons.Filled.Build, R.string.preferences, 0.4f),
+    ButtonModel(Icons.Filled.AccountBox, R.string.login, 0.5f, "Awesome"),
+    ButtonModel(Icons.Filled.List, R.string.price_list, 0.75f, "Awesome"),
+    ButtonModel(Icons.Filled.Add, R.string.subscribtions, 0.75f, "Awesome"),
+    ButtonModel(Icons.Filled.Phone, R.string.call_us, 0.4f, "Awesome"),
+    ButtonModel(Icons.Filled.Build, R.string.preferences, 0.4f, "Awesome"),
   )
 
   override fun equals(other: Any?): Boolean {
