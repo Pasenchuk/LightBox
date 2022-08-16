@@ -1,4 +1,4 @@
-package com.turing.lightbox.video
+package com.turing.mediapager.video
 
 import android.net.Uri
 import android.view.ViewGroup
@@ -62,4 +62,3 @@ fun VideoPlayer(uri: Uri) {
     onDispose { exoPlayer.release() }
   }
 }
-

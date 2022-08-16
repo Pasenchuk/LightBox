@@ -3,10 +3,10 @@ package com.turing.lightbox.repo
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
-import com.turing.lightbox.R
-import com.turing.lightbox.domain.MediaPage
-import com.turing.lightbox.domain.PhotoPage
-import com.turing.lightbox.domain.VideoPage
+import com.turing.mediapager.R
+import com.turing.mediapager.domain.MediaPage
+import com.turing.mediapager.domain.PhotoPage
+import com.turing.mediapager.domain.VideoPage
 import javax.inject.Inject
 
 interface MediaPagesRepo {

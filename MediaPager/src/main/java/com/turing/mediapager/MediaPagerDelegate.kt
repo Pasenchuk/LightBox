@@ -1,7 +1,7 @@
-package com.turing.lightbox.mediapager
+package com.turing.mediapager
 
-import com.turing.lightbox.domain.MediaPage
 import com.turing.lightbox.repo.MediaPagesRepo
+import com.turing.mediapager.domain.MediaPage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow

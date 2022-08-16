@@ -1,4 +1,4 @@
-package com.turing.lightbox.domain
+package com.turing.mediapager.domain
 
 import android.net.Uri
 

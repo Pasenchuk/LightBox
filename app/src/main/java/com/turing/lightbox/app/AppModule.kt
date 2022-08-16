@@ -1,10 +1,10 @@
 package com.turing.lightbox.app
 
 import android.content.Context
-import com.turing.lightbox.mediapager.MediaPageDelegate
-import com.turing.lightbox.mediapager.MediaPagerDelegateImpl
 import com.turing.lightbox.repo.LocalMediaPagesRepo
 import com.turing.lightbox.repo.MediaPagesRepo
+import com.turing.mediapager.MediaPageDelegate
+import com.turing.mediapager.MediaPagerDelegateImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

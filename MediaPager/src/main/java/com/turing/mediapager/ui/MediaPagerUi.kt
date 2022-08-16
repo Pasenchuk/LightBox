@@ -1,6 +1,4 @@
-@file:OptIn(ExperimentalPagerApi::class)
-
-package com.turing.lightbox.mediapager
+package com.turing.mediapager.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -26,10 +24,11 @@ import coil.request.ImageRequest
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import com.turing.lightbox.R
-import com.turing.lightbox.domain.PhotoPage
-import com.turing.lightbox.domain.VideoPage
-import com.turing.lightbox.video.VideoPlayer
+import com.turing.mediapager.MediaPageDelegate
+import com.turing.mediapager.R
+import com.turing.mediapager.domain.PhotoPage
+import com.turing.mediapager.domain.VideoPage
+import com.turing.mediapager.video.VideoPlayer
 import kotlinx.coroutines.launch
 
 @Composable
@@ -72,6 +71,7 @@ fun MediaPagerScreen(mediaPageDelegate: MediaPageDelegate) {
   }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun MediaPager(mediaPageDelegate: MediaPageDelegate, count: Int) {
 

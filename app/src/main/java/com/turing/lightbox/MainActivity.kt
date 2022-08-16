@@ -15,10 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
-import com.turing.lightbox.mediapager.MediaPagerScreen
+import com.turing.mediapager.ui.MediaPagerScreen
 import com.turing.lightbox.ui.theme.LightBoxTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,7 +43,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(mainVM: MainVM) {
-  Box() {
+  Box {
     MediaPagerScreen(mediaPageDelegate = mainVM)
 
     Column {
